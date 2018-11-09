@@ -1,0 +1,10 @@
+pip install venv
+python3 -m venv venv
+source venv/bin/activate
+pip install flask
+pip install flask_session
+pip install flask_sqlalchemy
+pip install flask_bootstrap
+pip install flask_wtf
+deactivate
+./db_create.py
