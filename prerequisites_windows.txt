@@ -1,5 +1,5 @@
 pip install venv
-python3 -m venv venv
+python -m venv venv
 venv\Scripts\activate
 pip install flask
 pip install flask_session
@@ -7,4 +7,4 @@ pip install flask_sqlalchemy
 pip install flask_bootstrap
 pip install flask_wtf
 deactivate
-./db_create.py
+db_create_windows.py
