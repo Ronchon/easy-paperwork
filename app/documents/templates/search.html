@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block scripts %}
+	<script type=text/javascript>
+	  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+	<script type=text/javascript>
+		$('#searchTable').on('click', '.clickable-row', function(event) {
+			$(this).addClass('info').siblings().removeClass('info');
+			$.post($SCRIPT_ROOT + '/search/select_document', { selectedId: $('tr.clickable-row.info').attr('id')});
+		});
+	</script>
+{% endblock %}
+{% block app_content %}
+	<h1>Search</h1>
+	<form action="" method="post" name="search" >
+		{{ form.hidden_tag() }}
+		{{ wtf.form_field(form.criteria, placeholder='Any text for document name or tags..')}} 
+		{{ wtf.form_field(form.search, class="btn btn-primary")}}
+		<br><br>
+		<div class="table-responsive">
+			<table class="table table-hover" id="searchTable">
+			<tr >
+				<th>File Name</th>
+				<th>File Tags</th>
+				<th>Relevance</th>
+			</tr>
+			{% for doc in documents %}
+			<tr class="clickable-row" id={{ doc.id_ }}>
+				<td>{{ doc.name }}</td>
+				<td>{{ doc.tags }}</td>
+				<td>{{ doc.relevance }}</td>
+			</tr>
+			{% endfor %}
+			</table>
+		</div>
+		{{ wtf.form_field(form.cancel, class="btn btn-default")}} 
+		{{ wtf.form_field(form.edit, class="btn btn-default")}}
+	</form>
+{% endblock %}

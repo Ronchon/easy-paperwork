@@ -9,4 +9,11 @@ db = SQLAlchemy(app)
 bootstrap = Bootstrap(app)
 Session(app)
 
-from app import views, database
+from app import database
+from app import directory
+from .users.views import users_bp
+from .documents.views import documents_bp
+ 
+# register the blueprints
+app.register_blueprint(users_bp)
+app.register_blueprint(documents_bp)

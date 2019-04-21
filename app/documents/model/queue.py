@@ -16,10 +16,12 @@ class QueueManager(object):
 	
 	def __init__(self, path):
 		self.path = path
+		self.selectedId = ""
 		self.refresh()
 	
 	def refresh(self):
 		self.documents = {}
+		self.selectedId= ""
 		for file_ in os.listdir(str(self.path)):
 			doc = DocToArchive(str(file_), self.path)
 			self.documents[doc.id_] = doc
@@ -49,7 +51,7 @@ class DocToArchive(object):
 		self.tags = ''
 	
 	def findNameAndType(self, fullName):
-		index = fullName.find('.')
+		index = fullName.rfind('.')
 		if index>-1:
 			self.name = fullName[:index]
 			self.type_ = fullName[index+1:]
@@ -117,12 +119,14 @@ class SearchEngine(object):
 		self.criteria = []
 		self.nameRelevance = 10
 		self.tagRelevance = 4
+		self.selectedId = ""
 	
 	def splitCriteria(self, textCriteria):
 		self.criteria = textCriteria.upper().split(' ')
 	
 	def reset(self):
 		self.criteria = []
+		self.selectedId = ""
 	
 	def returnResults(self):
 		self.documents = {}
