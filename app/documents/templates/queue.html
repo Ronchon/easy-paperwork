@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% block scripts %}
+	<script type=text/javascript>
+	  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+	<script type=text/javascript>
+		$('#queueTable').on('click', '.clickable-row', function(event) {
+			$(this).addClass('info').siblings().removeClass('info');
+			$.post($SCRIPT_ROOT + '/queue/select_document', { selectedId: $('tr.clickable-row.info').attr('id')});
+		});
+	</script>
+{% endblock %}
+{% block app_content %}
+	<h1>Queue</h1>
+	<form action="" method="post" name="queue">
+		{{ form.hidden_tag() }}
+		<div class="table-responsive">
+			<table class="table table-hover" id="queueTable">
+				<tr >
+					<th>File Name</th>
+					<th>File Type</th>
+				</tr>
+				{% for doc in documents %}
+				<tr class="clickable-row" id={{ doc.id_ }}>
+					<td>{{ doc.name }}</td>
+					<td>{{ doc.type_ }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+		{{ wtf.form_field(form.refresh, class="btn btn-default")}}
+		{{ wtf.form_field(form.archive, class="btn btn-primary")}}
+	</form>
+{% endblock %}

@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField, IntegerField
-from wtforms import SelectField, SelectMultipleField
+from wtforms import SelectField, SelectMultipleField, PasswordField
 from datetime import datetime
 
 class QueueForm(FlaskForm):
